@@ -19,20 +19,34 @@
                 </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 divide-solid">
-                <tr>
-                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">1</td>
-                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">A</td>
-                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">Poe switched his focus to prose, and spent the next several years working for literary journals and periodicals, becoming known for his own style of literary criticism. His work forced him to move between several cities, including Baltimore, Philadelphia, and New York City. In 1836, when he was 27, he married his 13-year-old cousin, Virginia Clemm. She died of tuberculosis in 1847. In January 1845, he published his poem "The Raven" to instant success. He planned for years to produce his own journal The Penn, later renamed The Stylus. But before it began publishing, Poe died in Baltimore in 1849, aged 40, under mysterious circumstances. The cause of his death remains unknown, and has been variously attributed to many causes including disease, alcoholism, substance abuse, and suicide.</td>
-                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">2024-06-01 13:43:47</td>
-                </tr>
-                <tr>
-                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">2</td>
-                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">B</td>
-                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">Poe switched his focus to prose, and spent the next several years working for literary journals and periodicals, becoming known for his own style of literary criticism. His work forced him to move between several cities, including Baltimore, Philadelphia, and New York City. In 1836, when he was 27, he married his 13-year-old cousin, Virginia Clemm. She died of tuberculosis in 1847. In January 1845, he published his poem "The Raven" to instant success. He planned for years to produce his own journal The Penn, later renamed The Stylus. But before it began publishing, Poe died in Baltimore in 1849, aged 40, under mysterious circumstances. The cause of his death remains unknown, and has been variously attributed to many causes including disease, alcoholism, substance abuse, and suicide.</td>
-                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">2024-06-02 14:43:47</td>
+                <tr v-for="post in posts.data">
+                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                        {{ post.id }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                        {{ post.title }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                        {{ post.content }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                        {{ post.created_at }}
+                    </td>
                 </tr>
                 </tbody>
             </table>
+            <TailwindPagination :data="posts" @pagination-change-page="getPosts" class="mt-4" />
         </div>
     </div>
 </template>
+
+<script setup>
+import { onMounted } from "vue";
+import { TailwindPagination } from 'laravel-vue-pagination';
+import usePosts from "@/composables/posts";
+
+const { posts, getPosts } = usePosts()
+onMounted(() => {
+    getPosts()
+})
+</script>
